@@ -1,0 +1,56 @@
+{
+  "manifest": {
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "arn:aws:lambda:us-east-1:051150753579:function:f0343458-0edb-443e-84fe-3f0f67c66012:Release_0"
+        },
+        "interfaces": [],
+        "locales": {},
+        "regions": {
+          "NA": {
+            "endpoint": {
+              "uri": "arn:aws:lambda:us-east-1:051150753579:function:f0343458-0edb-443e-84fe-3f0f67c66012:Release_0"
+            }
+          },
+          "EU": {
+            "endpoint": {
+              "uri": "arn:aws:lambda:eu-west-1:051150753579:function:f0343458-0edb-443e-84fe-3f0f67c66012:Release_0"
+            }
+          },
+          "FE": {
+            "endpoint": {
+              "uri": "arn:aws:lambda:us-west-2:051150753579:function:f0343458-0edb-443e-84fe-3f0f67c66012:Release_0"
+            }
+          }
+        }
+      }
+    },
+    "manifestVersion": "1.0",
+    "permissions": [
+      {
+        "name": "alexa::person_id:read"
+      }
+    ],
+    "publishingInformation": {
+      "locales": {
+        "pt-BR": {
+          "description": "Peça fatos e aprenda sobre o que realmente importa, como matéria escura. \n\nA habilidade Fatos proporciona diversão que toda a família pode desfrutar e com a garantia de torná-lo mais inteligente. \n\nPara começar, basta dizer\"Alexa, lançar Habilidade Fatos\" ou \"Alexa, habilidade Fatos abertos\" para obter um fato \".\n\nA qualquer momento, você pode parar dizendo \" Alexa, pare\"",
+          "examplePhrases": [
+            "Alexa, habilidade de abrir fatos",
+            "Alexa pede habilidade de fatos para um fato",
+            "Alexa contar fatos, habilidade para me contar curiosidades"
+          ],
+          "keywords": [
+            "espaço",
+            "futebol",
+            "fatos",
+            "curiosidades"
+          ],
+          "name": "tao longe de fechar",
+          "summary": "Aprenda curiosidades sobre o espaço e outros tópicos."
+        }
+      }
+    }
+  }
+}

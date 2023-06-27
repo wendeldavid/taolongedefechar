@@ -1,0 +1,51 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "tão longe de fechar",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StartOverIntent",
+          "samples": []
+        },
+        {
+          "name": "GetGameTimesHIntent",
+          "slots": [
+            {
+              "name": "game_name",
+              "type": "AMAZON.VideoGame"
+            },
+            {
+              "name": "query_game_name",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "procure por {query_game_name}",
+            "Tempo de jogo {game_name}"
+          ]
+        }
+      ],
+      "types": []
+    }
+  }
+}
