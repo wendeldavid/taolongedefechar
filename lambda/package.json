@@ -1,0 +1,28 @@
+{
+  "name": "taolongedefechar",
+  "version": "1.0.0",
+  "description": "skill for Alexa to know how long to beat",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wendeldavid/taolongedefechar.git"
+  },
+  "author": "Wendel David Przygoda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wendeldavid/taolongedefechar/issues"
+  },
+  "homepage": "https://github.com/wendeldavid/taolongedefechar#readme",
+  "dependencies": {
+    "ask-sdk-core": "^2.0.0",
+    "ask-sdk-dynamodb-persistence-adapter": "^2.9.0",
+    "ask-sdk-model": "^1.0.0",
+    "axios": "^1.4.0",
+    "i18next": "^15.0.5",
+    "i18next-sprintf-postprocessor": "^0.2.2",
+    "unirest": "^0.6.0"
+  }
+}
