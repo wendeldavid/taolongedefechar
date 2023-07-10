@@ -11,7 +11,7 @@
             "skipFiles": [
                 "lambda/<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/lambda/test.js"
+            "program": "${workspaceFolder}/lambda/local-debugger.js"
         }
     ]
 }

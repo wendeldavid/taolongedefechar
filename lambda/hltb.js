@@ -1,6 +1,8 @@
 var axios = require("axios");
 
-const listGames = async function(gameName) {    
+const listGames = async function(gameName) {
+    console.log("request game for hltb: " + gameName);
+
     var data = JSON.stringify({
     searchType: "games",
     searchTerms: [gameName],
@@ -66,7 +68,11 @@ const listGames = async function(gameName) {
 };
 
 const processResponse = function(data) {
-    console.log(date);
+    if (!data || data.length <= 0) {
+      return "Não encontrei o jogo que você procura. Tente refinar ou citar o número do jogo junto ao título";
+    }
+    console.log(data);
+
     const game = {
       id: data[0].game_id,
       name: data[0].game_name,
@@ -76,8 +82,10 @@ const processResponse = function(data) {
     
     let text = "o jogo " + game.name + " tem aproximadamente " + game.main + " horas de jogo principal, e cerca de " + game.plus + " horas considerando todos os objetivos";
     
-    // console.log(text);
-    return text;
+    return {
+      text: text,
+      imageUrl: "https://howlongtobeat.com/games/" + data[0].game_image
+    };
 }
 
 module.exports = {
