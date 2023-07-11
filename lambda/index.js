@@ -92,14 +92,24 @@ const GetGameTimesHandler = {
     console.log(outputSpeak);
 
     const requestAttributes =
-      handlerInput.attributesManager.getRequestAttributes();
+    handlerInput.attributesManager.getRequestAttributes();
     const randomReprompt = requestAttributes.t("REPROMPT");
     console.log(`reprompt: ${randomReprompt}`);
 
     const response = handlerInput.responseBuilder;
     response.speak(outputSpeak);
     response.reprompt(randomReprompt);
-    if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces["Alexa.Presentation.APL"]) {
+
+    console.log(handlerInput.requestEnvelope.context.System.device.supportedInterfaces);
+    if (
+      handlerInput.requestEnvelope.context.System.device.supportedInterfaces["Alexa.Presentation.APL"] ||
+      handlerInput.requestEnvelope.context["Alexa.Presentation.APL"]) {
+      console.log("e entrou pra imprimir a capinha do fucking jogo");
+
+      if (handlerInput.requestEnvelope.context["Alexa.Presentation.APL"]) {
+        console.log(handlerInput.requestEnvelope.context["Alexa.Presentation.APL"]);
+      }
+
       response.addDirective({
         type: "Alexa.Presentation.APL.RenderDocument",
         version: "1.0",
