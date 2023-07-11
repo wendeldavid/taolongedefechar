@@ -34,7 +34,7 @@ const LaunchHandler = {
   },
 };
 
-const getImageAPL = function (imageUrl) {
+const getImageAPL = function (imageUrl, width, height) {
   return {
     type: "APL",
     version: "2023.2",
@@ -56,8 +56,8 @@ const getImageAPL = function (imageUrl) {
               imageBlurredBackground: true,
               imageAspectRatio: "square",
               imageScale: "best-fit",
-              height: 900,
-              width: 400,
+              height: height - 20,
+              width: width - 20,
             },
           ],
         },
@@ -100,20 +100,28 @@ const GetGameTimesHandler = {
     response.speak(outputSpeak);
     response.reprompt(randomReprompt);
 
-    console.log(handlerInput.requestEnvelope.context.System.device.supportedInterfaces);
+    const CONTEXT = handlerInput.requestEnvelope.context;
+
+    console.log(CONTEXT.System.device.supportedInterfaces);
     if (
-      handlerInput.requestEnvelope.context.System.device.supportedInterfaces["Alexa.Presentation.APL"] ||
-      handlerInput.requestEnvelope.context["Alexa.Presentation.APL"]) {
+      CONTEXT.System.device.supportedInterfaces["Alexa.Presentation.APL"] ||
+      context["Alexa.Presentation.APL"]
+    ) {
       console.log("e entrou pra imprimir a capinha do fucking jogo");
 
-      if (handlerInput.requestEnvelope.context["Alexa.Presentation.APL"]) {
-        console.log(handlerInput.requestEnvelope.context["Alexa.Presentation.APL"]);
+      if (CONTEXT["Alexa.Presentation.APL"]) {
+        console.log(CONTEXT["Alexa.Presentation.APL"]);
       }
 
+      console.log(CONTEXT.Viewport);
       response.addDirective({
         type: "Alexa.Presentation.APL.RenderDocument",
         version: "1.0",
-        document: getImageAPL(output.imageUrl),
+        document: getImageAPL(
+          output.imageUrl,
+          CONTEXT.Viewport.pixelWidth,
+          CONTEXT.Viewport.pixelHeight
+        ),
         datasources: {
           templateData: {
             header: "header",
