@@ -100,27 +100,27 @@ const GetGameTimesHandler = {
     response.speak(outputSpeak);
     response.reprompt(randomReprompt);
 
-    const CONTEXT = handlerInput.requestEnvelope.context;
+    const context = handlerInput.requestEnvelope.context;
 
-    console.log(CONTEXT.System.device.supportedInterfaces);
+    console.log(context.System.device.supportedInterfaces);
     if (
-      CONTEXT.System.device.supportedInterfaces["Alexa.Presentation.APL"] ||
+      context.System.device.supportedInterfaces["Alexa.Presentation.APL"] ||
       context["Alexa.Presentation.APL"]
     ) {
       console.log("e entrou pra imprimir a capinha do fucking jogo");
 
-      if (CONTEXT["Alexa.Presentation.APL"]) {
-        console.log(CONTEXT["Alexa.Presentation.APL"]);
+      if (context["Alexa.Presentation.APL"]) {
+        console.log(context["Alexa.Presentation.APL"]);
       }
 
-      console.log(CONTEXT.Viewport);
+      console.log(context.Viewport);
       response.addDirective({
         type: "Alexa.Presentation.APL.RenderDocument",
         version: "1.0",
         document: getImageAPL(
           output.imageUrl,
-          CONTEXT.Viewport.pixelWidth,
-          CONTEXT.Viewport.pixelHeight
+          context.Viewport.pixelWidth,
+          context.Viewport.pixelHeight
         ),
         datasources: {
           templateData: {
