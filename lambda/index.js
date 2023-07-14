@@ -27,9 +27,11 @@ const LaunchHandler = {
   handle(handlerInput) {
     console.log(handlerInput);
 
+    const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+
     return handlerInput.responseBuilder
-      .speak("Olá, diga o nome do jogo que vocẽ quer saber e eu direi o tempo total para terminá-lo")
-      .reprompt("Deseja saber de qual jogo?")
+      .speak(requestAttributes.t("HELLO_MESSAGE"))
+      .reprompt(requestAttributes.t("REPROMPT"))
       .getResponse();
   },
 };
@@ -91,8 +93,7 @@ const GetGameTimesHandler = {
 
     console.log(outputSpeak);
 
-    const requestAttributes =
-    handlerInput.attributesManager.getRequestAttributes();
+    const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const randomReprompt = requestAttributes.t("REPROMPT");
     console.log(`reprompt: ${randomReprompt}`);
 

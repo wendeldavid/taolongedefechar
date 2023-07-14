@@ -70,7 +70,7 @@ const listGames = async function(gameName) {
 const processResponse = function(data) {
     if (!data || data.length <= 0) {
       return {
-        text : "Não encontrei o jogo que você procura. Tente refinar citando o número do jogo junto ao título, ou optar por colocar o subtitulo ao invés do número"
+        text : "Não encontrei o jogo que você procura. Tente refinar citando o número do jogo junto ao título, ou optar apenas pelo sub título ao invés do número"
       };
     }
     console.log(data);
