@@ -105,8 +105,10 @@ const GetGameTimesHandler = {
 
     console.log(context.System.device.supportedInterfaces);
     if (
-      context.System.device.supportedInterfaces["Alexa.Presentation.APL"] ||
-      context["Alexa.Presentation.APL"]
+        context.Viewport &&
+        (context.System.device.supportedInterfaces["Alexa.Presentation.APL"] ||
+          context["Alexa.Presentation.APL"]
+      )
     ) {
       console.log("e entrou pra imprimir a capinha do fucking jogo");
 
