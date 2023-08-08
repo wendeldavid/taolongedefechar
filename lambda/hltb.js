@@ -90,7 +90,12 @@ const processResponse = function(data) {
     };
 }
 
+const getSuffix = function() {
+  return "Deseja saber sobre outro jogo?";
+}
+
 module.exports = {
   listGames: listGames,
-  processResponse: processResponse
+  processResponse: processResponse,
+  getSuffix: getSuffix
 };

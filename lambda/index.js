@@ -89,7 +89,7 @@ const GetGameTimesHandler = {
     console.log(gameData);
 
     const output = hltb.processResponse(gameData.data.data);
-    const outputSpeak = output.text;
+    const outputSpeak = output.text + hltb.getSuffix();
 
     console.log(outputSpeak);
 
