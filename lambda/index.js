@@ -89,9 +89,17 @@ const GetGameTimesHandler = {
     console.log(gameData);
 
     const output = hltb.processResponse(gameData.data.data);
-    const outputSpeak = output.text + hltb.getSuffix();
+    const outputSpeak = `
+      <speak>
+        ${output.text}
+        <break time='1s'/>
+        <prosody>${hltb.getSuffix()}</prosody>
+      </speak>
+      `;
 
     console.log(outputSpeak);
+    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    sessionAttributes.lastResponse = outputSpeak;
 
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const randomReprompt = requestAttributes.t("REPROMPT");
@@ -155,6 +163,22 @@ const ErrorHandler = {
       .getResponse();
   },
 };
+
+const RepeatHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    return (
+      request.type === "IntentRequest" &&
+      request.intent.name === "AMAZON.RepeatIntent"
+    );
+  },
+  handle(handlerInput) {
+    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    const lastResponse = sessionAttributes.lastResponse ||"Desculpe, não encontrei uma resposta anterior.";
+
+    return handlerInput.responseBuilder.speak(lastResponse).getResponse();
+  }
+}
 
 const HelpHandler = {
   canHandle(handlerInput) {
@@ -278,6 +302,7 @@ exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchHandler,
     GetGameTimesHandler,
+    RepeatHandler,
     HelpHandler,
     ExitHandler,
     FallbackHandler,
