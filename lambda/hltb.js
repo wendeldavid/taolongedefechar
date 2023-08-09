@@ -96,6 +96,6 @@ const getSuffix = function() {
 
 module.exports = {
   listGames: listGames,
-  processResponse: processResponse,
+  processResponse: processResponse, 
   getSuffix: getSuffix
 };
