@@ -5,7 +5,7 @@ const listGames = async function(gameName) {
 
     var data = JSON.stringify({
     searchType: "games",
-    searchTerms: [gameName],
+    searchTerms: gameName.split(" "),
     searchPage: 1,
     size: 20,
     searchOptions: {
@@ -69,7 +69,9 @@ const listGames = async function(gameName) {
 
 const processResponse = function(data) {
     if (!data || data.length <= 0) {
-      return "Não encontrei o jogo que você procura. Tente refinar ou citar o número do jogo junto ao título";
+      return {
+        text : "Não encontrei o jogo que você procura. Tente refinar citando o número do jogo junto ao título, ou optar apenas pelo sub título ao invés do número"
+      };
     }
     console.log(data);
 
@@ -88,7 +90,12 @@ const processResponse = function(data) {
     };
 }
 
+const getSuffix = function() {
+  return "Deseja saber sobre outro jogo?";
+}
+
 module.exports = {
   listGames: listGames,
-  processResponse: processResponse
+  processResponse: processResponse, 
+  getSuffix: getSuffix
 };

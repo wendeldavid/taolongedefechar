@@ -27,14 +27,16 @@ const LaunchHandler = {
   handle(handlerInput) {
     console.log(handlerInput);
 
+    const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+
     return handlerInput.responseBuilder
-      .speak("Olá, diga o nome do jogo que vocẽ quer saber e eu direi o tempo total para terminá-lo")
-      .reprompt("Deseja saber de qual jogo?")
+      .speak(requestAttributes.t("HELLO_MESSAGE"))
+      .reprompt(requestAttributes.t("REPROMPT"))
       .getResponse();
   },
 };
 
-const getImageAPL = function (imageUrl) {
+const getImageAPL = function (imageUrl, width, height) {
   return {
     type: "APL",
     version: "2023.2",
@@ -56,8 +58,8 @@ const getImageAPL = function (imageUrl) {
               imageBlurredBackground: true,
               imageAspectRatio: "square",
               imageScale: "best-fit",
-              height: 900,
-              width: 400,
+              height: height - 20,
+              width: width - 20,
             },
           ],
         },
@@ -87,23 +89,50 @@ const GetGameTimesHandler = {
     console.log(gameData);
 
     const output = hltb.processResponse(gameData.data.data);
-    const outputSpeak = output.text;
+    const outputSpeak = `
+      <speak>
+        ${output.text}
+        <break time='1s'/>
+        <prosody>${hltb.getSuffix()}</prosody>
+      </speak>
+      `;
 
     console.log(outputSpeak);
+    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    sessionAttributes.lastResponse = outputSpeak;
 
-    const requestAttributes =
-      handlerInput.attributesManager.getRequestAttributes();
+    const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const randomReprompt = requestAttributes.t("REPROMPT");
     console.log(`reprompt: ${randomReprompt}`);
 
     const response = handlerInput.responseBuilder;
     response.speak(outputSpeak);
     response.reprompt(randomReprompt);
-    if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces["Alexa.Presentation.APL"]) {
+
+    const context = handlerInput.requestEnvelope.context;
+
+    console.log(context.System.device.supportedInterfaces);
+    if (
+        context.Viewport &&
+        (context.System.device.supportedInterfaces["Alexa.Presentation.APL"] ||
+          context["Alexa.Presentation.APL"]
+      )
+    ) {
+      console.log("e entrou pra imprimir a capinha do fucking jogo");
+
+      if (context["Alexa.Presentation.APL"]) {
+        console.log(context["Alexa.Presentation.APL"]);
+      }
+
+      console.log(context.Viewport);
       response.addDirective({
         type: "Alexa.Presentation.APL.RenderDocument",
         version: "1.0",
-        document: getImageAPL(output.imageUrl),
+        document: getImageAPL(
+          output.imageUrl,
+          context.Viewport.pixelWidth,
+          context.Viewport.pixelHeight
+        ),
         datasources: {
           templateData: {
             header: "header",
@@ -134,6 +163,22 @@ const ErrorHandler = {
       .getResponse();
   },
 };
+
+const RepeatHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    return (
+      request.type === "IntentRequest" &&
+      request.intent.name === "AMAZON.RepeatIntent"
+    );
+  },
+  handle(handlerInput) {
+    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    const lastResponse = sessionAttributes.lastResponse ||"Desculpe, não encontrei uma resposta anterior.";
+
+    return handlerInput.responseBuilder.speak(lastResponse).getResponse();
+  }
+}
 
 const HelpHandler = {
   canHandle(handlerInput) {
@@ -257,6 +302,7 @@ exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchHandler,
     GetGameTimesHandler,
+    RepeatHandler,
     HelpHandler,
     ExitHandler,
     FallbackHandler,
