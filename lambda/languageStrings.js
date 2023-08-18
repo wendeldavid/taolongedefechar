@@ -30,9 +30,9 @@ module.exports = {
         "Até o próximo jogo",
         "Espero você novamente",
         "Ok, quando precisar é só chamar",
-        "Game over",
+        // "Game over",
         "Acabaram suas fichas mesmo",
-        "Até a próxima player 2",
+        "Até a próxima controle 2",
         "Perdeu? Passa o controle",
       ],
       REPROMPT: [
